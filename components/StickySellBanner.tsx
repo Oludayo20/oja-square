@@ -1,10 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { X } from "lucide-react";
 import { getSignupAsStoreOwnerUrl } from "@/lib/oja-links";
 
 const DISMISS_KEY = "oja-square:sticky-sell-banner-dismissed";
+
+function subscribe() {
+  // Nothing external to subscribe to — this component's own state changes
+  // (clicking dismiss) already trigger the re-render that re-checks
+  // localStorage. A no-op is all useSyncExternalStore needs here.
+  return () => {};
+}
+
+function getSnapshot(): boolean {
+  try {
+    return localStorage.getItem(DISMISS_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function getServerSnapshot(): boolean {
+  // The server can't read localStorage — always render "visible" so the
+  // client's first hydration pass matches the server HTML exactly. Reading
+  // localStorage in a useEffect and calling setState from it would avoid
+  // the mismatch too, but trips the set-state-in-effect lint rule and adds
+  // an extra render pass; useSyncExternalStore is the sanctioned way to
+  // read external, client-only state without either problem.
+  return false;
+}
 
 /**
  * Sticky, site-wide "sell on Oja Square" CTA — distinct from the in-page
@@ -22,20 +47,16 @@ const DISMISS_KEY = "oja-square:sticky-sell-banner-dismissed";
  *   `SellBanner`): Oja Square has no session/auth state to check by design.
  */
 export default function StickySellBanner() {
-  const [dismissed, setDismissed] = useState(false);
-
-  useEffect(() => {
-    try {
-      if (localStorage.getItem(DISMISS_KEY) === "1") {
-        setDismissed(true);
-      }
-    } catch {
-      // localStorage unavailable (private browsing, blocked) — just show it.
-    }
-  }, []);
+  const dismissedInStorage = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
+  const [dismissedThisClick, setDismissedThisClick] = useState(false);
+  const dismissed = dismissedInStorage || dismissedThisClick;
 
   function dismiss() {
-    setDismissed(true);
+    setDismissedThisClick(true);
     try {
       localStorage.setItem(DISMISS_KEY, "1");
     } catch {
