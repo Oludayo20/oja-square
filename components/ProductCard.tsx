@@ -28,7 +28,16 @@ function formatNaira(value: string | number) {
  * URL is computed server-side, and the store subdomain's own `Checkout.tsx`
  * does the actual cart-adding once the buyer lands there.
  */
-export default function ProductCard({ product }: { product: MarketplaceProduct }) {
+export default function ProductCard({
+  product,
+  priority = false,
+}: {
+  product: MarketplaceProduct;
+  /** Set for the first few above-the-fold cards only — preloads the image
+   * instead of lazy-loading it, which is what actually helps Largest
+   * Contentful Paint. Passing it on every card would defeat the point. */
+  priority?: boolean;
+}) {
   const image = getPrimaryImageUrl(product);
   const price = product.discountedPrice ?? product.price;
   const hasDiscount = Boolean(product.discountedPrice);
@@ -43,9 +52,10 @@ export default function ProductCard({ product }: { product: MarketplaceProduct }
         {image ? (
           <Image
             src={image}
-            alt={product.name}
+            alt={`${product.name} — ${product.store.name} on Oja Square`}
             fill
             sizes="(min-width: 1024px) 25vw, 50vw"
+            priority={priority}
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (

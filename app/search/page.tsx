@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Search as SearchIcon } from "lucide-react";
 import { globalSearch } from "@/lib/api/search";
 import {
@@ -5,14 +6,34 @@ import {
   sortProductsImageFirst,
   sortStoresForDisplay,
 } from "@/lib/sort";
+import { getSiteUrl } from "@/lib/seo";
 import ProductCard from "@/components/ProductCard";
 import StoreCard from "@/components/StoreCard";
 import CategoryCard from "@/components/CategoryCard";
+import { JsonLd } from "@/components/JsonLd";
 
 export const revalidate = 60;
 
 interface Props {
   searchParams: Promise<{ q?: string }>;
+}
+
+/**
+ * Internal search results are the textbook case for noindex,follow — a
+ * thin, effectively infinite-variation page state that would otherwise
+ * flood the index with query permutations instead of the actual content
+ * (that's `/products`/`/stores`/`/categories`'s job). `follow: true` still
+ * lets crawlers reach the products/stores it links to.
+ */
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const { q } = await searchParams;
+  const title = q ? `Search results for "${q}"` : "Search Oja Square";
+  return {
+    title,
+    description:
+      "Search products, stores, and categories across every store on Oja.",
+    robots: { index: false, follow: true },
+  };
 }
 
 export default async function SearchPage({ searchParams }: Props) {
@@ -72,6 +93,17 @@ export default async function SearchPage({ searchParams }: Props) {
           )}
         </>
       )}
+
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Oja Square", item: getSiteUrl() },
+            { "@type": "ListItem", position: 2, name: "Search", item: `${getSiteUrl()}/search` },
+          ],
+        }}
+      />
     </div>
   );
 }

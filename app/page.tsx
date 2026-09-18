@@ -16,12 +16,15 @@ import {
 import { searchProducts } from "@/lib/api/products";
 import { searchStores } from "@/lib/api/stores";
 import { listMarketplaceCategories } from "@/lib/api/categories";
-import { getSignupAsStoreOwnerUrl } from "@/lib/oja-links";
+import { getSignupAsStoreOwnerUrl, getStorefrontUrl } from "@/lib/oja-links";
 import { isLikelyRealCategory, isLikelyRealProduct, isLikelyRealStore } from "@/lib/quality";
 import { sortCategoriesForDisplay, sortProductsImageFirst, sortStoresForDisplay } from "@/lib/sort";
+import { HOME_FAQ } from "@/lib/faqContent";
+import { getSiteUrl } from "@/lib/seo";
 import ProductCard from "@/components/ProductCard";
 import StoreCard from "@/components/StoreCard";
 import CategoryCard from "@/components/CategoryCard";
+import { JsonLd } from "@/components/JsonLd";
 
 export const revalidate = 180;
 
@@ -269,8 +272,8 @@ export default async function HomePage() {
             href="/categories"
           />
           <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-            {categories.slice(0, 8).map((category) => (
-              <CategoryCard key={category.id} category={category} />
+            {categories.slice(0, 8).map((category, i) => (
+              <CategoryCard key={category.id} category={category} priority={i < 4} />
             ))}
           </div>
         </section>
@@ -653,6 +656,60 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ — real answers, always rendered (not hidden behind an
+       * accordion) so both search engines and AI answer engines see the
+       * full text, plus mirrored as FAQPage JSON-LD below. */}
+      <section
+        id="faq"
+        className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8"
+        aria-labelledby="faq-heading"
+      >
+        <h2
+          id="faq-heading"
+          className="oja-display text-center text-2xl font-800 text-gray-900 sm:text-3xl"
+        >
+          Frequently asked questions
+        </h2>
+        <div className="mt-8 divide-y divide-gray-200">
+          {HOME_FAQ.map((item) => (
+            <div key={item.question} className="py-5">
+              <h3 className="oja-display text-base font-700 text-gray-900">
+                {item.question}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">{item.answer}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": `${getSiteUrl()}/#homepage-faq`,
+          mainEntity: HOME_FAQ.map((item) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: { "@type": "Answer", text: item.answer },
+          })),
+        }}
+      />
+
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "@id": `${getSiteUrl()}/#homepage-products`,
+          name: "Products on Oja Square",
+          itemListElement: explore.slice(0, 12).map((product, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            url: `${getStorefrontUrl(product.store.slug)}/product/${product.slug}`,
+            name: product.name,
+          })),
+        }}
+      />
     </div>
   );
 }

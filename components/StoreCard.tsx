@@ -10,7 +10,13 @@ import type { MarketplaceStore } from "@/lib/types";
  * description block means store cards in the same row match height
  * whether or not a given store filled in a bio, address, or logo.
  */
-export default function StoreCard({ store }: { store: MarketplaceStore }) {
+export default function StoreCard({
+  store,
+  priority = false,
+}: {
+  store: MarketplaceStore;
+  priority?: boolean;
+}) {
   const logo = getMediaUrl(store.logoUrl);
 
   return (
@@ -21,7 +27,13 @@ export default function StoreCard({ store }: { store: MarketplaceStore }) {
       <div className="flex items-center gap-3">
         <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-teal-50 ring-2 ring-white">
           {logo ? (
-            <Image src={logo} alt={store.name} fill className="object-cover" />
+            <Image
+              src={logo}
+              alt={`${store.name} logo — store on Oja Square`}
+              fill
+              priority={priority}
+              className="object-cover"
+            />
           ) : (
             // Store placeholder: Store icon — distinct from Package
             // (products) and Tag (categories).

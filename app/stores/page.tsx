@@ -1,11 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Search, Store as StoreIcon } from "lucide-react";
 import { searchStores } from "@/lib/api/stores";
 import { isLikelyRealStore } from "@/lib/quality";
 import { sortStoresForDisplay } from "@/lib/sort";
+import { getSiteUrl } from "@/lib/seo";
+import { getStorefrontUrl } from "@/lib/oja-links";
 import StoreCard from "@/components/StoreCard";
 import Pagination from "@/components/Pagination";
 import SellBanner from "@/components/SellBanner";
+import { JsonLd } from "@/components/JsonLd";
 
 export const revalidate = 120;
 
@@ -17,6 +21,27 @@ const SORT_OPTIONS = [
 
 interface Props {
   searchParams: Promise<Record<string, string | undefined>>;
+}
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const params = await searchParams;
+  const title = params.search
+    ? `"${params.search}" — Store Results`
+    : "Stores — Discover Nigerian Merchants on Oja";
+  const description =
+    "Browse independent Nigerian merchant stores selling on Oja — every store here has active, in-stock products ready to buy.";
+  // `sortBy` reorders the same set (not distinct content); `search` narrows
+  // it to a genuinely different result set and is worth its own indexed URL.
+  const canonical = params.search
+    ? `/stores?search=${encodeURIComponent(params.search)}`
+    : "/stores";
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: { title: `${title} | Oja Square`, description, url: canonical },
+  };
 }
 
 export default async function StoresPage({ searchParams }: Props) {
@@ -84,8 +109,8 @@ export default async function StoresPage({ searchParams }: Props) {
 
       {displayItems.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {displayItems.map((store) => (
-            <StoreCard key={store.id} store={store} />
+          {displayItems.map((store, i) => (
+            <StoreCard key={store.id} store={store} priority={i < 3} />
           ))}
         </div>
       ) : (
@@ -95,6 +120,31 @@ export default async function StoresPage({ searchParams }: Props) {
       <Pagination pagination={pagination} basePath="/stores" searchParams={params} />
 
       <SellBanner />
+
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Oja Square", item: getSiteUrl() },
+            { "@type": "ListItem", position: 2, name: "Stores", item: `${getSiteUrl()}/stores` },
+          ],
+        }}
+      />
+      {displayItems.length > 0 && (
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            itemListElement: displayItems.slice(0, 24).map((store, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              url: getStorefrontUrl(store.slug),
+              name: store.name,
+            })),
+          }}
+        />
+      )}
     </div>
   );
 }

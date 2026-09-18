@@ -1,14 +1,33 @@
 import type { MetadataRoute } from "next";
+import { getSiteUrl } from "@/lib/seo";
 
-const STATIC_PATHS = ["/", "/products", "/stores", "/categories"];
+/**
+ * Static routes only — deliberately no per-product/per-store URLs. Oja
+ * Square doesn't host product detail pages itself (those live on each
+ * store's own subdomain); listing thousands of `?categoryIds=`/`?q=`
+ * filter-combo URLs here would just be sitemap noise search engines
+ * already advise against submitting. `/search` is excluded — it's
+ * noindexed (see its `metadata.robots`), so it has no business in a
+ * sitemap either.
+ */
+const ROUTES: Array<{
+  path: string;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority: number;
+}> = [
+  { path: "/", changeFrequency: "hourly", priority: 1 },
+  { path: "/products", changeFrequency: "hourly", priority: 0.9 },
+  { path: "/stores", changeFrequency: "daily", priority: 0.8 },
+  { path: "/categories", changeFrequency: "daily", priority: 0.7 },
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://oja.com.ng").replace(
-    /\/$/,
-    "",
-  );
-  return STATIC_PATHS.map((path) => ({
+  const base = getSiteUrl();
+  const lastModified = new Date();
+  return ROUTES.map(({ path, changeFrequency, priority }) => ({
     url: `${base}${path}`,
-    lastModified: new Date(),
+    lastModified,
+    changeFrequency,
+    priority,
   }));
 }

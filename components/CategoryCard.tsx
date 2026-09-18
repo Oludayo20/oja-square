@@ -10,7 +10,13 @@ import type { MarketplaceCategory } from "@/lib/types";
  * ends up the same size regardless of name length or whether it has an
  * image.
  */
-export default function CategoryCard({ category }: { category: MarketplaceCategory }) {
+export default function CategoryCard({
+  category,
+  priority = false,
+}: {
+  category: MarketplaceCategory;
+  priority?: boolean;
+}) {
   const image = getMediaUrl(category.imageUrl);
 
   return (
@@ -20,7 +26,13 @@ export default function CategoryCard({ category }: { category: MarketplaceCatego
     >
       <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-teal-50 ring-2 ring-white transition-transform group-hover:scale-105">
         {image ? (
-          <Image src={image} alt={category.name} fill className="object-cover" />
+          <Image
+            src={image}
+            alt={`${category.name} category on Oja Square`}
+            fill
+            priority={priority}
+            className="object-cover"
+          />
         ) : (
           // Category placeholder: Tag icon — distinct from Package
           // (products) and Store (stores).
