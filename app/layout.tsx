@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
+import StickySellBanner from "@/components/StickySellBanner";
 import "./globals.css";
 
 const sora = Sora({
@@ -33,6 +34,7 @@ export default function RootLayout({
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
+        <StickySellBanner />
       </body>
     </html>
   );
