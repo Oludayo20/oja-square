@@ -4,7 +4,7 @@ import { globalSearch } from "@/lib/api/search";
 /**
  * Client typeahead proxy so the nav never has to call oja-backend from the
  * browser (CORS). `globalSearch()` already applies `lib/quality.ts`'s
- * dummy-data filter — nothing to add here.
+ * dummy-data filter, so there's nothing to add here.
  */
 export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams.get("q") ?? "";

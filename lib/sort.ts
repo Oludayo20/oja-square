@@ -1,8 +1,8 @@
 /**
- * Display-order helpers — visual quality, not a replacement for whatever
+ * Display-order helpers: visual quality, not a replacement for whatever
  * sort the caller already applied (price, rating, newest, etc). A product
  * or category without an image isn't hidden (it may still be perfectly
- * real — §3.1's eligibility rule and `lib/quality.ts`'s dummy filter
+ * real: §3.1's eligibility rule and `lib/quality.ts`'s dummy filter
  * already handle correctness; this only handles how the survivors are
  * arranged).
  */
@@ -15,14 +15,14 @@ function hasImage(input: { imageUrls?: string[] | null; thumbnail?: string | nul
 }
 
 /**
- * Round-robins items across groups instead of leaving them clustered —
- * e.g. a merchant who bulk-uploaded 10 products in one sitting all sort
+ * Round-robins items across groups instead of leaving them clustered.
+ * For example, a merchant who bulk-uploaded 10 products in one sitting all sort
  * together under "Newest," so the raw API order shows 5+ in a row from one
  * store before another store's products appear at all. This takes one item
  * per group in turn (groups ordered by first appearance), cycling until
  * every item is placed, so no two consecutive results share a group unless
  * one group so outnumbers the rest that it's unavoidable at the tail.
- * Stable within each group — doesn't reorder a single store's own items
+ * Stable within each group: doesn't reorder a single store's own items
  * relative to each other, only interleaves *across* stores.
  */
 export function interleaveByGroup<T>(items: T[], keyFn: (item: T) => string): T[] {
@@ -63,7 +63,7 @@ export function sortProductsImageFirst(products: MarketplaceProduct[]): Marketpl
   return interleaveByGroup(byImage, (p) => p.store.id);
 }
 
-/** Stores with a logo first, then by product count — no interleaving needed, every row is already a distinct store. */
+/** Stores with a logo first, then by product count: no interleaving needed, every row is already a distinct store. */
 export function sortStoresForDisplay(stores: MarketplaceStore[]): MarketplaceStore[] {
   return [...stores].sort((a, b) => {
     const imageDelta = Number(Boolean(b.logoUrl)) - Number(Boolean(a.logoUrl));
@@ -74,7 +74,7 @@ export function sortStoresForDisplay(stores: MarketplaceStore[]): MarketplaceSto
 
 /**
  * Categories with an image and more products lead, then interleaved across
- * stores — a store with several well-stocked categories otherwise stacks
+ * stores: a store with several well-stocked categories otherwise stacks
  * them all at the top, ahead of every other store's best category.
  */
 export function sortCategoriesForDisplay(categories: MarketplaceCategory[]): MarketplaceCategory[] {

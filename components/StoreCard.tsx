@@ -29,13 +29,13 @@ export default function StoreCard({
           {logo ? (
             <Image
               src={logo}
-              alt={`${store.name} logo — store on Oja Square`}
+              alt={`${store.name} logo, a store on Oja Square`}
               fill
               priority={priority}
               className="object-cover"
             />
           ) : (
-            // Store placeholder: Store icon — distinct from Package
+            // Store placeholder: Store icon, distinct from Package
             // (products) and Tag (categories).
             <div className="flex h-full w-full items-center justify-center">
               <StoreIconGlyph className="h-5 w-5 text-teal-300" />

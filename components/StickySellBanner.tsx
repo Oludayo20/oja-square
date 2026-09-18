@@ -7,7 +7,7 @@ import { getSignupAsStoreOwnerUrl } from "@/lib/oja-links";
 const DISMISS_KEY = "oja-square:sticky-sell-banner-dismissed";
 
 function subscribe() {
-  // Nothing external to subscribe to — this component's own state changes
+  // Nothing external to subscribe to. This component's own state changes
   // (clicking dismiss) already trigger the re-render that re-checks
   // localStorage. A no-op is all useSyncExternalStore needs here.
   return () => {};
@@ -22,7 +22,7 @@ function getSnapshot(): boolean {
 }
 
 function getServerSnapshot(): boolean {
-  // The server can't read localStorage — always render "visible" so the
+  // The server can't read localStorage, so always render "visible" so the
   // client's first hydration pass matches the server HTML exactly. Reading
   // localStorage in a useEffect and calling setState from it would avoid
   // the mismatch too, but trips the set-state-in-effect lint rule and adds
@@ -32,16 +32,16 @@ function getServerSnapshot(): boolean {
 }
 
 /**
- * Sticky, site-wide "sell on Oja Square" CTA — distinct from the in-page
+ * Sticky, site-wide "sell on Oja Square" CTA, distinct from the in-page
  * `SellBanner` (§5.3), which only appears on a few pages inline. This one
  * follows the visitor everywhere, so it has to earn that by staying out of
  * the way:
  *
- * - Dismissible, and remembered via localStorage — closing it once means
+ * - Dismissible, and remembered via localStorage. Closing it once means
  *   never seeing it again on this device, not "until the next page load."
  * - A trailing spacer of the same height as the fixed bar keeps it from
  *   permanently covering the last bit of the footer once someone scrolls
- *   to the bottom of a page — without it, `fixed` content just sits on top
+ *   to the bottom of a page. Without it, `fixed` content just sits on top
  *   of whatever's there.
  * - No visibility check for "already a merchant" (same reasoning as
  *   `SellBanner`): Oja Square has no session/auth state to check by design.

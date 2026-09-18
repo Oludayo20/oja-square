@@ -19,7 +19,7 @@ interface Props {
 }
 
 /**
- * Internal search results are the textbook case for noindex,follow — a
+ * Internal search results are the textbook case for noindex,follow: a
  * thin, effectively infinite-variation page state that would otherwise
  * flood the index with query permutations instead of the actual content
  * (that's `/products`/`/stores`/`/categories`'s job). `follow: true` still

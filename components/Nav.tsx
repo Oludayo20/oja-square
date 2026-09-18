@@ -9,11 +9,11 @@ import SearchBox from "./SearchBox";
 /**
  * Adapted for Oja Square: React Router → Next.js, auth/sell hand off to
  * `app.useoja.com`, product/store suggestions land on storefronts (no
- * marketplace cart). Logo is the icon mark only, not the full wordmark —
+ * marketplace cart). Logo is the icon mark only, not the full wordmark.
  * "Oja Square" is set as text next to it (the wordmark image already
  * spells out "Oja," so pairing it with the icon avoided the redundant
  * "Oja … Oja Square" read). No account icon: this app has no session/auth
- * of its own by design (browsing is anonymous end to end — see
+ * of its own by design (browsing is anonymous end to end, see
  * `oja-docs/OJA_MARKETPLACE_FEATURE.md` §2.1c), so a profile icon here
  * only pointed at a page for a session Oja Square never establishes;
  * "Log in" is an honest plain link to where that actually lives instead.

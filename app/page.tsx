@@ -29,7 +29,7 @@ import { JsonLd } from "@/components/JsonLd";
 export const revalidate = 180;
 
 /**
- * The home page's sections aren't paginated — unlike `/products`/`/stores`
+ * The home page's sections aren't paginated, unlike `/products`/`/stores`
  * (§3.1's, `lib/quality.ts`'s known limitation), it's safe to over-fetch a
  * cushion here, filter out anything that fails the eligibility/dummy-data
  * checks, sort images-first, and slice down to the intended display count,
@@ -68,7 +68,7 @@ export default async function HomePage() {
     searchProducts({ sortBy: "rating:desc", limit: 14 }, 120),
     searchProducts({ limit: 24 }, 120),
     // Sorted by product count client-side (sortStoresForDisplay) rather than
-    // by name/date — "Featured" means "the biggest stores," distinct from
+    // by name/date. "Featured" means "the biggest stores," distinct from
     // "New Stores" below.
     searchStores({ limit: 16 }),
     searchStores({ sortBy: "createdAt:desc", limit: 10 }),
@@ -84,7 +84,7 @@ export default async function HomePage() {
   const explore = curateProducts(exploreRaw.items, 12);
   const stores = sortStoresForDisplay(storesRaw.items.filter(isLikelyRealStore)).slice(0, 6);
   const newStores = newStoresRaw.items.filter(isLikelyRealStore).slice(0, 4);
-  // Real totals still come from the unfiltered API pagination — the stats
+  // Real totals still come from the unfiltered API pagination. The stats
   // band and merchant CTA are about the true catalog size, not the curated,
   // quality-filtered subset shown in the sections above.
   const totalProducts = exploreRaw.pagination.total;
@@ -189,7 +189,7 @@ export default async function HomePage() {
                 Buy Direct
               </h3>
               <p className="text-[11px] text-white/80">
-                No middleman — checkout with the merchant.
+                No middleman. Checkout with the merchant.
               </p>
             </div>
           </div>
@@ -237,7 +237,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Browse by price — a real filter the API already supports
+      {/* Browse by price: a real filter the API already supports
        * (`minPrice`/`maxPrice`) that had no entry point anywhere in the UI
        * until now. */}
       <section className="mx-auto max-w-7xl px-4 pb-2 pt-6 sm:px-6 lg:px-8">
@@ -479,7 +479,7 @@ export default async function HomePage() {
               </h2>
               <p className="mb-8 text-sm leading-relaxed text-teal-50">
                 Open your store, list your products, and reach buyers
-                discovering merchants across Oja — not just your own storefront.
+                discovering merchants across Oja, not just your own storefront.
               </p>
               <a
                 href={getSignupAsStoreOwnerUrl()}
@@ -601,7 +601,7 @@ export default async function HomePage() {
                 n: "01",
                 icon: Search,
                 title: "One search",
-                body: "Skip hopping storefronts. Find it here, then buy on the merchant’s own shop — same Paystack checkout they already use.",
+                body: "Skip hopping storefronts. Find it here, then buy on the merchant’s own shop, using the same Paystack checkout they already use.",
               },
               {
                 n: "02",
@@ -657,7 +657,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* FAQ — real answers, always rendered (not hidden behind an
+      {/* FAQ: real answers, always rendered (not hidden behind an
        * accordion) so both search engines and AI answer engines see the
        * full text, plus mirrored as FAQPage JSON-LD below. */}
       <section

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { PaginationMeta } from "@/lib/types";
 
-/** Plain `<Link>`s (no client state) — page changes are just URL changes. */
+/** Plain `<Link>`s (no client state). Page changes are just URL changes. */
 export default function Pagination({
   pagination,
   basePath,

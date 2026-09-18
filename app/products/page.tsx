@@ -12,8 +12,8 @@ import Pagination from "@/components/Pagination";
 import SellBanner from "@/components/SellBanner";
 import { JsonLd } from "@/components/JsonLd";
 
-// Filtered/paginated by query string — many distinct combinations, so this
-// is ISR-cached per unique URL rather than build-time static. See §2.1c.
+// Filtered/paginated by query string, with many distinct combinations, so
+// this is ISR-cached per unique URL rather than build-time static. See §2.1c.
 export const revalidate = 60;
 
 interface Props {
@@ -24,29 +24,29 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const params = await searchParams;
   const categoryIds = params.categoryIds?.split(",").filter(Boolean) ?? [];
 
-  // No "on Oja Square" / trailing brand suffix here — the root layout's
-  // title template (`%s | Oja Square`) already appends it; duplicating it
-  // per-page produced titles like "X — Shop X on Oja Square | Oja Square".
-  let title = "All Products — Shop Every Store on Oja";
+  // No "on Oja Square" / trailing brand suffix here: the root layout's
+  // title template (`%s | Oja Square`) already appends it. Duplicating it
+  // per-page produced titles like "X: Shop X on Oja Square | Oja Square".
+  let title = "All Products: Shop Every Store on Oja";
   if (params.q) {
-    title = `"${params.q}" — Product Results`;
+    title = `"${params.q}": Product Results`;
   } else if (categoryIds.length === 1) {
     const categories = await listMarketplaceCategories(120);
     const match = categories.find((c) => c.id === categoryIds[0]);
-    if (match) title = `Shop ${match.name} — All Stores`;
+    if (match) title = `Shop ${match.name}: All Stores`;
   }
 
   const description =
-    "Browse products from every independent Nigerian merchant on Oja — filter by category, price, and discount, then buy directly from the store that sells it.";
+    "Browse products from every independent Nigerian merchant on Oja. Filter by category, price, and discount, then buy directly from the store that sells it.";
 
-  // Free-text search results are a thin, endlessly-variable page state —
-  // standard SEO practice is to keep it crawlable (follow) but not indexed,
+  // Free-text search results are a thin, endlessly-variable page state.
+  // Standard SEO practice is to keep it crawlable (follow) but not indexed,
   // same treatment as /search itself. Category/price/discount filters are
   // real, distinct catalog views and stay indexable.
   const isSearchResult = Boolean(params.q);
 
-  // Canonical keeps content-narrowing filters (category/price/discount —
-  // each is a genuinely different set of products, worth its own indexed
+  // Canonical keeps content-narrowing filters (category/price/discount,
+  // each a genuinely different set of products, worth its own indexed
   // URL) but strips ordering/pagination noise (`sortBy` reorders the exact
   // same set; `page` beyond 1 isn't a distinct "topic"). Collapsing
   // *every* filter combo down to bare /products would prevent a real
@@ -88,7 +88,7 @@ export default async function ProductsPage({ searchParams }: Props) {
     listMarketplaceCategories(30),
   ]);
 
-  // Dummy-data filter applied to the displayed page only — same known
+  // Dummy-data filter applied to the displayed page only, same known
   // pagination-count caveat as §3.1's eligibility filter (lib/quality.ts).
   const displayItems = sortProductsImageFirst(items.filter(isLikelyRealProduct));
 

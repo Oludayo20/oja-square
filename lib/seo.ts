@@ -1,5 +1,5 @@
 /**
- * Shared SEO constants/helpers — one source of truth for the site URL,
+ * Shared SEO constants/helpers, one source of truth for the site URL,
  * brand copy, and keyword set so every page's metadata/JSON-LD stays
  * consistent instead of hand-typing the same strings per file.
  */
@@ -11,7 +11,7 @@ export function getSiteUrl(): string {
   return "https://oja.com.ng";
 }
 
-/** Absolute URL for a path — JSON-LD and social meta need absolute, not relative, URLs. */
+/** Absolute URL for a path. JSON-LD and social meta need absolute, not relative, URLs. */
 export function absoluteUrl(path: string): string {
   const base = getSiteUrl();
   if (!path || path === "/") return base;
@@ -25,13 +25,13 @@ export const SITE_NAME = "Oja Square";
  * every page shares the same core positioning rather than drifting.
  */
 export const SITE_DESCRIPTION =
-  "Oja Square is Oja's cross-store online marketplace in Nigeria — browse products from every independent Nigerian merchant on Oja in one place, then buy directly from the store that sells it.";
+  "Oja Square is Oja's cross-store online marketplace in Nigeria. Browse products from every independent Nigerian merchant on Oja in one place, then buy directly from the store that sells it.";
 
 /**
  * Natural, non-stuffed keyword set covering how a Nigerian buyer actually
  * searches (marketplace/shopping intent) plus the brand terms themselves.
  * Used as a seed list for per-page `keywords` arrays, not pasted verbatim
- * everywhere — each page should still lead with what's specific to it.
+ * everywhere. Each page should still lead with what's specific to it.
  */
 export const CORE_KEYWORDS = [
   "Oja Square",
@@ -44,7 +44,7 @@ export const CORE_KEYWORDS = [
   "Nigeria ecommerce marketplace",
 ];
 
-/** Official Oja social profiles — reused for JSON-LD `sameAs` (same brand as oja-landing-page/oja-frontend). */
+/** Official Oja social profiles, reused for JSON-LD `sameAs` (same brand as oja-landing-page/oja-frontend). */
 export const OJA_SAME_AS = [
   "https://www.facebook.com/ojacomng",
   "https://www.instagram.com/oja.com.ng",

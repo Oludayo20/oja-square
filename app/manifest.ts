@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Oja Square — shop every store on Oja",
+    name: "Oja Square: shop every store on Oja",
     short_name: "Oja Square",
     description:
       "Browse products from every independent Nigerian merchant on Oja in one place, then buy directly from the store that sells it.",

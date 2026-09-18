@@ -34,7 +34,7 @@ export default function CategoryCard({
             className="object-cover"
           />
         ) : (
-          // Category placeholder: Tag icon — distinct from Package
+          // Category placeholder: Tag icon, distinct from Package
           // (products) and Store (stores).
           <div className="flex h-full w-full items-center justify-center">
             <Tag className="h-6 w-6 text-teal-300" />

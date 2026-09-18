@@ -14,7 +14,7 @@ const SORT_OPTIONS = [
 ];
 
 /**
- * The one client component on `/products` — filter/sort controls that
+ * The one client component on `/products`: filter/sort controls that
  * update the URL, which is what actually drives the (server-rendered,
  * ISR-cached) results below. See §2.1c.
  */

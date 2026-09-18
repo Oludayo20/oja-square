@@ -1,6 +1,6 @@
 /**
  * `oja-backend` API access. Same `NEXT_PUBLIC_ECOM_APP_API_URL` convention
- * `oja-landing-page/lib/ecom-api.ts` already uses — shared env-var name
+ * `oja-landing-page/lib/ecom-api.ts` already uses: shared env-var name
  * across the repo family, not shared code.
  */
 
@@ -45,7 +45,7 @@ function mediaFileKeyFromAbsoluteUrl(raw: string): string | null {
 
 /**
  * Public URL for a stored product/store image ref (an S3 object key).
- * The bucket is private — every image is served through the API's own
+ * The bucket is private: every image is served through the API's own
  * presigned-redirect proxy, not a public CDN URL. See `next.config.ts` and
  * `oja-docs/OJA_MARKETPLACE_FEATURE.md` §2.1c.
  */
@@ -87,7 +87,7 @@ interface EcomFetchOptions extends RequestInit {
 }
 
 /**
- * Fetch a versioned API endpoint. Deliberately never forwards cookies —
+ * Fetch a versioned API endpoint. Deliberately never forwards cookies:
  * every Oja Square page is public and anonymous by design (§2.1, §2.1c);
  * a credentialed request here would make responses vary per-viewer and
  * break caching for no benefit this app needs.

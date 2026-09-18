@@ -1,13 +1,13 @@
 /**
  * Types matched against `oja-backend`'s actual controller responses
  * (`product.controller.ts`, `store/storeCrud.controller.ts`,
- * `category.controller.ts`, `search.controller.ts`) — not a port of
+ * `category.controller.ts`, `search.controller.ts`): not a port of
  * `oja-frontend`'s broader Product/Store types, most of which cover
  * merchant-dashboard fields this read-only app never touches.
  *
  * `oja-backend` has a partial, hand-maintained OpenAPI spec
  * (`src/swagger/index.ts`) covering `/product/search` and
- * `/category/marketplace` — useful as a cross-check, not as a source of
+ * `/category/marketplace`: useful as a cross-check, not as a source of
  * truth (it doesn't cover `/store` or `/search`, and can drift from the
  * real implementation). See §2.1c.
  */
@@ -37,7 +37,7 @@ export interface Paginated<T> {
 export type SortBy = string;
 
 // ---------------------------------------------------------------------------
-// Products — GET /product/search response shape (product.controller.ts,
+// Products: GET /product/search response shape (product.controller.ts,
 // `getAllProducts`'s `include`)
 // ---------------------------------------------------------------------------
 
@@ -112,7 +112,7 @@ export interface ProductSearchParams {
 }
 
 // ---------------------------------------------------------------------------
-// Stores — GET /store response shape (storeCrud.controller.ts, `getAll`)
+// Stores: GET /store response shape (storeCrud.controller.ts, `getAll`)
 // ---------------------------------------------------------------------------
 
 export interface MarketplaceStoreOwner {
@@ -128,10 +128,10 @@ export interface MarketplaceStoreVerification {
 
 /**
  * `owner`, `verification`, and `_count` are only present on `GET /store`'s
- * curated response — `GET /search` returns a much rawer `Store` row (nearly
+ * curated response: `GET /search` returns a much rawer `Store` row (nearly
  * the full Prisma model, no aggregates) for the same field. Both real
  * shapes flow through `StoreCard`, so these stay optional rather than
- * assumed — see `components/StoreCard.tsx`.
+ * assumed: see `components/StoreCard.tsx`.
  */
 export interface MarketplaceStore {
   id: string;
@@ -140,7 +140,7 @@ export interface MarketplaceStore {
   description: string | null;
   logoUrl: string | null;
   bannerUrl: string | null;
-  /** Store's own contact email — optional field, often left blank even by
+  /** Store's own contact email: optional field, often left blank even by
    * real merchants. Present in the raw response on both `/store` and
    * `/search` (confirmed against real data); not previously typed here
    * because nothing used it until `lib/quality.ts`'s dummy-data check. */
@@ -160,7 +160,7 @@ export interface StoreSearchParams {
 }
 
 // ---------------------------------------------------------------------------
-// Categories — GET /category/marketplace response shape
+// Categories: GET /category/marketplace response shape
 // (category.controller.ts, `listCategoriesForMarketplace`)
 // ---------------------------------------------------------------------------
 
@@ -176,13 +176,13 @@ export interface MarketplaceCategory {
 }
 
 // ---------------------------------------------------------------------------
-// Search — GET /search response shape (search.controller.ts, `searchAll`)
+// Search: GET /search response shape (search.controller.ts, `searchAll`)
 // ---------------------------------------------------------------------------
 
 export interface GlobalSearchResult {
   products: MarketplaceProduct[];
   categories: MarketplaceCategory[];
   stores: MarketplaceStore[];
-  // `orders` is deliberately not typed here — Oja Square never requests it
+  // `orders` is deliberately not typed here: Oja Square never requests it
   // (calls without credentials) and never renders it. See §2.1c.
 }

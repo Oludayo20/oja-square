@@ -2,11 +2,11 @@ import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/seo";
 
 /**
- * Static routes only — deliberately no per-product/per-store URLs. Oja
+ * Static routes only, deliberately no per-product/per-store URLs. Oja
  * Square doesn't host product detail pages itself (those live on each
- * store's own subdomain); listing thousands of `?categoryIds=`/`?q=`
+ * store's own subdomain), and listing thousands of `?categoryIds=`/`?q=`
  * filter-combo URLs here would just be sitemap noise search engines
- * already advise against submitting. `/search` is excluded — it's
+ * already advise against submitting. `/search` is excluded too: it's
  * noindexed (see its `metadata.robots`), so it has no business in a
  * sitemap either.
  */

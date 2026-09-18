@@ -23,7 +23,7 @@ function formatNaira(value: string | number) {
  * grid's default `align-items: stretch`, `h-full` here is what actually
  * makes same-row cards match height even when one has less content.
  *
- * The buy action is not "add to a marketplace cart" — it's a plain link to
+ * The buy action is not "add to a marketplace cart": it's a plain link to
  * the product's own store checkout (§3.2, §5.2). No client JS needed: the
  * URL is computed server-side, and the store subdomain's own `Checkout.tsx`
  * does the actual cart-adding once the buyer lands there.
@@ -33,7 +33,7 @@ export default function ProductCard({
   priority = false,
 }: {
   product: MarketplaceProduct;
-  /** Set for the first few above-the-fold cards only — preloads the image
+  /** Set for the first few above-the-fold cards only. Preloads the image
    * instead of lazy-loading it, which is what actually helps Largest
    * Contentful Paint. Passing it on every card would defeat the point. */
   priority?: boolean;
@@ -52,14 +52,14 @@ export default function ProductCard({
         {image ? (
           <Image
             src={image}
-            alt={`${product.name} — ${product.store.name} on Oja Square`}
+            alt={`${product.name} from ${product.store.name} on Oja Square`}
             fill
             sizes="(min-width: 1024px) 25vw, 50vw"
             priority={priority}
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          // Product placeholder: Package icon — distinct from the Tag used
+          // Product placeholder: Package icon, distinct from the Tag used
           // for categories and the Store icon used for stores, so a blank
           // card still reads as "this is a product" at a glance.
           <div className="flex h-full w-full items-center justify-center bg-gray-50">

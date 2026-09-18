@@ -10,11 +10,11 @@ import { JsonLd } from "@/components/JsonLd";
 
 export const revalidate = 300;
 
-const TITLE = "Categories — Shop by Category Across Every Store on Oja";
+const TITLE = "Categories: Shop by Category Across Every Store on Oja";
 const DESCRIPTION =
-  "Explore product categories aggregated from every independent merchant on Oja — sort orders (popularity, A-Z) don't change what's here, just how it's arranged.";
+  "Explore product categories aggregated from every independent merchant on Oja. Sort orders (popularity, A-Z) don't change what's here, just how it's arranged.";
 
-// `sortBy` only reorders the same set of categories — same content either
+// `sortBy` only reorders the same set of categories, same content either
 // way, so canonical always collapses to the base URL rather than treating
 // each sort order as a distinct indexable page.
 export const metadata: Metadata = {
@@ -39,8 +39,8 @@ export default async function CategoriesPage({ searchParams }: Props) {
   const real = raw.filter(isLikelyRealCategory);
 
   // Not paginated (`listMarketplaceCategories` returns a flat capped list,
-  // no `pagination.total` to desync) — safe to sort freely here, unlike
-  // `/products`/`/stores`.
+  // no `pagination.total` to desync), so it's safe to sort freely here,
+  // unlike `/products`/`/stores`.
   const categories =
     sortBy === "name"
       ? [...real].sort((a, b) => a.name.localeCompare(b.name))

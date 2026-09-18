@@ -4,11 +4,11 @@ import { absoluteUrl, getSiteUrl, OJA_SAME_AS, SITE_DESCRIPTION, SITE_NAME } fro
 /**
  * Site-wide Organization + WebSite + SearchAction graph, rendered once in
  * the root layout. The `SearchAction` is what makes a Google "sitelinks
- * search box" possible for branded queries — it points at a search flow
+ * search box" possible for branded queries: it points at a search flow
  * `/search` genuinely supports, not an aspirational one.
  *
- * Oja Square is presented as part of the same Oja organization (not a
- * separate company) — `alternateName` and `sameAs` tie back to the same
+ * Oja Square is presented as part of the same Oja organization, not a
+ * separate company. `alternateName` and `sameAs` tie back to the same
  * brand oja-landing-page's own JSON-LD establishes.
  */
 export function SiteJsonLd() {

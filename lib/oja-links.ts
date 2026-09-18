@@ -1,6 +1,6 @@
 /**
- * Cross-app links. Oja Square never implements its own auth or checkout —
- * these are plain outbound links to the apps that already do
+ * Cross-app links. Oja Square never implements its own auth or checkout.
+ * These are plain outbound links to the apps that already do
  * (`oja-frontend`), reusing the same pattern `oja-landing-page/lib/oja-links.ts`
  * already established. See `oja-docs/OJA_MARKETPLACE_FEATURE.md` §2.1, §5.2, §5.3.
  */
@@ -41,9 +41,9 @@ export function getMarketingUrl(path: string): string {
 }
 
 /**
- * A specific store's storefront URL. Always `{slug}.useoja.com` — never
+ * A specific store's storefront URL. Always `{slug}.useoja.com`: never
  * derived from the current request's host, since Oja Square's own host is
- * `oja.com.ng`. Store subdomains stay on `.useoja.com` only (§2.1a) — there
+ * `oja.com.ng`. Store subdomains stay on `.useoja.com` only (§2.1a): there
  * is no `*.oja.com.ng` wildcard behind this feature.
  */
 export function getStorefrontUrl(slug: string): string {

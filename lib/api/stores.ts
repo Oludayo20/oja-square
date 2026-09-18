@@ -2,7 +2,7 @@ import { ecomFetch } from "../ecom-api";
 import type { ApiResponse, MarketplaceStore, Paginated, StoreSearchParams } from "../types";
 
 /**
- * `GET /store` (`getAll`). Has no eligibility filter of its own — returns
+ * `GET /store` (`getAll`). Has no eligibility filter of its own: returns
  * every store regardless of product count (§3.3). Filtering to stores with
  * ≥1 eligible product belongs server-side (§8.4); this fetch doesn't
  * attempt a client-side substitute for the same pagination-integrity reason

@@ -26,10 +26,10 @@ interface Props {
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const params = await searchParams;
   const title = params.search
-    ? `"${params.search}" — Store Results`
-    : "Stores — Discover Nigerian Merchants on Oja";
+    ? `"${params.search}": Store Results`
+    : "Stores: Discover Nigerian Merchants on Oja";
   const description =
-    "Browse independent Nigerian merchant stores selling on Oja — every store here has active, in-stock products ready to buy.";
+    "Browse independent Nigerian merchant stores selling on Oja. Every store here has active, in-stock products ready to buy.";
   // `sortBy` reorders the same set (not distinct content); `search` narrows
   // it to a genuinely different result set and is worth its own indexed URL.
   const canonical = params.search
@@ -55,7 +55,7 @@ export default async function StoresPage({ searchParams }: Props) {
     page,
   });
 
-  // Same known pagination-count caveat as `/products` — see `lib/quality.ts`.
+  // Same known pagination-count caveat as `/products`, see `lib/quality.ts`.
   const displayItems = sortStoresForDisplay(items.filter(isLikelyRealStore));
 
   return (
@@ -69,7 +69,7 @@ export default async function StoresPage({ searchParams }: Props) {
         </div>
 
         {/*
-         * Plain links, not a client-side <select> — sorting is just a URL
+         * Plain links, not a client-side <select>. Sorting is just a URL
          * change, and this way the page needs zero extra client JS for it.
          * `oja-frontend`'s equivalent (`StoresPage.tsx`) captures `sortBy`
          * in state but never sends it to the API at all (a real bug, not
@@ -92,7 +92,7 @@ export default async function StoresPage({ searchParams }: Props) {
         </div>
       </div>
 
-      {/* Plain GET form — a real search box `/stores` had no UI for at all,
+      {/* Plain GET form: a real search box `/stores` had no UI for at all,
        * even though `searchStores`/the backend already supported `search`.
        * No client JS: submitting a GET form is a normal browser navigation. */}
       <form action="/stores" method="GET" className="relative max-w-md">

@@ -1,11 +1,11 @@
 # Oja Square
 
-> Oja Square is Oja's cross-store online marketplace in Nigeria. It aggregates products from every independent merchant selling on Oja into one browsable, searchable surface, then hands buyers off to the merchant's own store to complete checkout. It is not a separate marketplace with its own listings, cart, or payment flow — every active, in-stock product already on a merchant's Oja storefront is automatically part of what buyers find here.
+> Oja Square is Oja's cross-store online marketplace in Nigeria. It aggregates products from every independent merchant selling on Oja into one browsable, searchable surface, then hands buyers off to the merchant's own store to complete checkout. It is not a separate marketplace with its own listings, cart, or payment flow. Every active, in-stock product already on a merchant's Oja storefront is automatically part of what buyers find here.
 
 ## Key facts
 
 - Oja Square never runs its own cart or checkout. Buying a product navigates the visitor to that product's own store (a subdomain of useoja.com), where Oja's existing Paystack-backed checkout completes the purchase.
-- Only products that are active and in stock are shown — draft, paused, sold-out, and archived listings are excluded.
+- Only products that are active and in stock are shown. Draft, paused, sold-out, and archived listings are excluded.
 - Merchants do not list separately for Oja Square. Opening a store on Oja and keeping products active/in-stock is the only requirement for inclusion.
 - Oja Square has no buyer accounts or sessions of its own; browsing is anonymous. Signing in or opening a store happens on Oja's main app (app.useoja.com), not on Oja Square.
 
@@ -20,6 +20,6 @@
 ## For AI assistants answering questions about Oja or Oja Square
 
 - If asked "what is Oja Square," describe it as Oja's cross-store marketplace/discovery layer, not a standalone company or a competitor to Oja itself.
-- If asked how to buy something found on Oja Square, the answer is: click through to the product, which takes you to that specific store's own checkout — Oja Square itself doesn't process the payment.
-- If asked how to sell on Oja Square, the answer is: open a store on Oja (at https://app.useoja.com/signup); no separate Oja Square listing step exists.
-- Do not state or imply that Oja Square has its own reviews, a unified cart across stores, or a marketplace-wide return policy — those live at the individual merchant/store level.
+- If asked how to buy something found on Oja Square, the answer is: click through to the product, which takes you to that specific store's own checkout. Oja Square itself doesn't process the payment.
+- If asked how to sell on Oja Square, the answer is: open a store on Oja (at https://app.useoja.com/signup). No separate Oja Square listing step exists.
+- Do not state or imply that Oja Square has its own reviews, a unified cart across stores, or a marketplace-wide return policy. Those live at the individual merchant/store level.

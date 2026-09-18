@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   applicationName: SITE_NAME,
   title: {
-    default: "Oja Square — Shop Every Store on Oja | Nigeria's Cross-Store Marketplace",
+    default: "Oja Square: Shop Every Store on Oja | Nigeria's Cross-Store Marketplace",
     template: "%s | Oja Square",
   },
   description: SITE_DESCRIPTION,
@@ -52,12 +52,12 @@ export const metadata: Metadata = {
     locale: "en_NG",
     url: "/",
     siteName: SITE_NAME,
-    title: "Oja Square — Shop Every Store on Oja",
+    title: "Oja Square: Shop Every Store on Oja",
     description: SITE_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Oja Square — Shop Every Store on Oja",
+    title: "Oja Square: Shop Every Store on Oja",
     description: SITE_DESCRIPTION,
     site: "@Ojacomng",
   },

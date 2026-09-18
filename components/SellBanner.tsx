@@ -2,14 +2,14 @@ import { ArrowRight } from "lucide-react";
 import { getSignupAsStoreOwnerUrl } from "@/lib/oja-links";
 
 /**
- * §5.3 — Oja's own growth loop, not a third-party ad. Compact variant for
- * `/products`, `/stores`, `/categories` — the home page gets its own,
+ * §5.3: Oja's own growth loop, not a third-party ad. Compact variant for
+ * `/products`, `/stores`, `/categories`. The home page gets its own,
  * larger "Merchant CTA" section instead (`app/page.tsx`), matching
  * `oja-frontend`'s `Home.tsx` treatment for that spot.
  *
  * No visibility check for "already a merchant": Oja Square has no
  * session/auth state to check against (§2.1c), so this is a static,
- * always-shown CTA rather than a conditionally-rendered one — a signed-in
+ * always-shown CTA rather than a conditionally-rendered one. A signed-in
  * merchant seeing "open your store" once in a while is a much smaller cost
  * than giving this public, cacheable page per-viewer variance.
  */

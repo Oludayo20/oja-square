@@ -2,12 +2,12 @@ import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/seo";
 
 /**
- * Own robots setup, pointed at `oja.com.ng` — not `oja-frontend`'s
+ * Own robots setup, pointed at `oja.com.ng`, not `oja-frontend`'s
  * `sitemap.ts` (which defaults to `useoja.com` and is irrelevant here once
  * `oja-frontend`'s cross-store pages are deprecated). See §5.2a.
  *
  * Explicit allow-rules for AI crawlers/answer engines mirror
- * `oja-landing-page/app/robots.ts` — search + assistant citation is a real
+ * `oja-landing-page/app/robots.ts`. Search and assistant citation is a real
  * acquisition channel now, not just traditional search.
  */
 export default function robots(): MetadataRoute.Robots {
