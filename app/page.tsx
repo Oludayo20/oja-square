@@ -24,6 +24,7 @@ import { getSiteUrl } from "@/lib/seo";
 import ProductCard from "@/components/ProductCard";
 import StoreCard from "@/components/StoreCard";
 import CategoryCard from "@/components/CategoryCard";
+import HeroCarousel from "@/components/HeroCarousel";
 import { JsonLd } from "@/components/JsonLd";
 
 export const revalidate = 180;
@@ -107,7 +108,32 @@ export default async function HomePage() {
         </div>
       </div>
 
-      <section className="oja-grid-bg mx-auto max-w-7xl px-4 pb-6 pt-8 sm:px-6 lg:px-8">
+      {categories.length > 0 && (
+        <nav
+          aria-label="Categories"
+          className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:hidden"
+        >
+          <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:px-6">
+            {categories.map((category) => (
+              <Link
+                key={category.id}
+                href={`/products?categoryIds=${category.id}`}
+                className="shrink-0 whitespace-nowrap rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:border-teal-400 hover:text-teal-700"
+              >
+                {category.name}
+              </Link>
+            ))}
+            <Link
+              href="/categories"
+              className="shrink-0 whitespace-nowrap rounded-full bg-teal-600 px-4 py-2 text-sm font-bold text-white"
+            >
+              All categories
+            </Link>
+          </div>
+        </nav>
+      )}
+
+      <section className="oja-grid-bg mx-auto max-w-7xl px-4 pb-6 pt-4 lg:pt-8 sm:px-6 lg:px-8">
         <div className="flex min-h-[300px] gap-5 sm:h-[380px]">
           <div className="hidden w-56 flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm lg:flex">
             <div className="border-b border-gray-100 px-4 py-3">
@@ -135,30 +161,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="relative flex-1 overflow-hidden rounded-2xl bg-teal-600 shadow-2xl shadow-teal-600/20">
-            <div className="oja-grid-bg absolute inset-0 opacity-40" />
-            <div className="relative flex h-full flex-col justify-center px-8 md:px-12">
-              <span className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/30 bg-white/15 px-3 py-1 text-[11px] font-600 uppercase tracking-widest text-teal-50">
-                <Sparkles className="h-3 w-3" />
-                Oja Square
-              </span>
-              <h1 className="oja-display mb-4 text-3xl font-800 leading-tight text-white md:text-4xl lg:text-5xl">
-                Every store. <br />
-                <span className="oja-shimmer-text">One Square.</span>
-              </h1>
-              <p className="mb-8 hidden max-w-sm text-sm text-teal-50 sm:block">
-                Browse products from every independent merchant on Oja, then
-                buy straight from the store that sells it.
-              </p>
-              <Link
-                href="/products"
-                className="group/btn inline-flex w-fit min-h-[44px] items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-700 text-teal-600 shadow-lg transition-all hover:bg-teal-50"
-              >
-                Start browsing
-                <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-              </Link>
-            </div>
-          </div>
+          <HeroCarousel />
 
           <div className="hidden w-52 flex-col gap-4 xl:flex">
             <a
@@ -234,31 +237,6 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Browse by price: a real filter the API already supports
-       * (`minPrice`/`maxPrice`) that had no entry point anywhere in the UI
-       * until now. */}
-      <section className="mx-auto max-w-7xl px-4 pb-2 pt-6 sm:px-6 lg:px-8">
-        <p className="oja-display mb-3 text-xs font-700 uppercase tracking-widest text-gray-400">
-          Browse by price
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {[
-            { label: "Under ₦5,000", href: "/products?maxPrice=5000" },
-            { label: "₦5,000 – ₦20,000", href: "/products?minPrice=5000&maxPrice=20000" },
-            { label: "₦20,000 – ₦100,000", href: "/products?minPrice=20000&maxPrice=100000" },
-            { label: "₦100,000+", href: "/products?minPrice=100000" },
-          ].map(({ label, href }) => (
-            <Link
-              key={label}
-              href={href}
-              className="rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:border-teal-400 hover:text-teal-700"
-            >
-              {label}
-            </Link>
-          ))}
         </div>
       </section>
 

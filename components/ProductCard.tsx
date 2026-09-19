@@ -76,13 +76,13 @@ export default function ProductCard({
       </Link>
 
       <div className="flex flex-1 flex-col gap-1 p-3">
-        <div className="flex items-center justify-between gap-2">
-          <span className="truncate text-[10px] font-bold uppercase tracking-wide text-gray-400">
+        <div className="flex flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
+          <span className="min-w-0 truncate text-[10px] font-bold uppercase tracking-wide text-gray-400">
             {product.category?.name ?? "General"}
           </span>
           <a
             href={getStorefrontUrl(product.store.slug)}
-            className="flex shrink-0 items-center gap-1 truncate text-[10px] font-black uppercase text-teal-700 hover:underline"
+            className="flex min-w-0 items-center gap-1 text-[10px] font-black uppercase text-teal-700 hover:underline sm:max-w-[55%] sm:shrink-0"
           >
             <StoreIcon className="h-3 w-3 shrink-0" />
             <span className="truncate">{product.store.name}</span>
@@ -96,7 +96,7 @@ export default function ProductCard({
           {product.name}
         </Link>
 
-        <div className="mt-1 flex flex-col gap-2">
+        <div className="mt-auto flex flex-col gap-2 pt-1">
           <div className="flex min-w-0 items-baseline gap-2">
             <span className="oja-display truncate text-base font-800 text-gray-900">
               {formatNaira(price)}
