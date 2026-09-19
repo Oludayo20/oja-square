@@ -15,13 +15,9 @@ function formatNaira(value: string | number) {
 }
 
 /**
- * Fixed layout so every product card is the same size regardless of content
- * length: the name is clamped to a reserved 2-line height (not just
- * clamped-but-collapsible), the rating row always renders (a placeholder
- * line when there's no rating yet, not an absent row), and everything that
- * can overflow truncates instead of stretching the card. Combined with the
- * grid's default `align-items: stretch`, `h-full` here is what actually
- * makes same-row cards match height even when one has less content.
+ * Same-row cards match height regardless of content length: the name is
+ * clamped to 2 lines, everything else truncates, and the grid's default
+ * `align-items: stretch` plus `h-full` here equalizes card height.
  *
  * The buy action is not "add to a marketplace cart": it's a plain link to
  * the product's own store checkout (§3.2, §5.2). No client JS needed: the
@@ -66,6 +62,12 @@ export default function ProductCard({
             <Package className="h-10 w-10 text-gray-300" />
           </div>
         )}
+        {rating > 0 && (
+          <span className="absolute bottom-2 right-2 flex items-center gap-0.5 rounded-full bg-white/90 px-1.5 py-0.5 text-[10px] font-semibold text-gray-700 shadow-sm">
+            <Star className="h-2.5 w-2.5 fill-amber-500 text-amber-500" />
+            {rating.toFixed(1)}
+          </span>
+        )}
         {hasDiscount && (
           <span className="absolute left-2 top-2 rounded-full bg-orange-500 px-2 py-0.5 text-[10px] font-800 text-white oja-display">
             SALE
@@ -89,26 +91,13 @@ export default function ProductCard({
 
         <Link
           href={getStorefrontUrl(product.store.slug) + `/product/${product.slug}`}
-          className="line-clamp-2 min-h-[2.5rem] text-sm font-semibold text-gray-900 hover:text-teal-700"
+          className="line-clamp-2 text-sm font-semibold text-gray-900 hover:text-teal-700"
         >
           {product.name}
         </Link>
 
-        <div className="flex items-center gap-1 text-xs text-gray-500">
-          {rating > 0 ? (
-            <>
-              <Star className="h-3 w-3 shrink-0 fill-amber-500 text-amber-500" />
-              <span className="truncate">
-                {rating.toFixed(1)} ({product.totalReviews})
-              </span>
-            </>
-          ) : (
-            <span className="text-gray-300">No ratings yet</span>
-          )}
-        </div>
-
-        <div className="mt-auto flex items-center justify-between gap-2 pt-2">
-          <div className="flex min-w-0 flex-col">
+        <div className="mt-1 flex flex-col gap-2">
+          <div className="flex min-w-0 items-baseline gap-2">
             <span className="oja-display truncate text-base font-800 text-gray-900">
               {formatNaira(price)}
             </span>
@@ -124,7 +113,7 @@ export default function ProductCard({
               storeSlug: product.store.slug,
               productId: product.id,
             })}
-            className="shrink-0 rounded-full bg-teal-600 px-3 py-1.5 text-xs font-bold text-white shadow-sm shadow-teal-600/20 hover:bg-teal-700"
+            className="block w-full rounded-full bg-teal-600 px-3 py-2 text-center text-xs font-bold text-white shadow-sm shadow-teal-600/20 hover:bg-teal-700"
           >
             Buy
           </a>
